@@ -1,3 +1,6 @@
+"""
+Opens a Tkinter window for choosing a directory
+"""
 from tkinter import filedialog
 from tkinter import Tk
 
