@@ -27,7 +27,9 @@ body_pattern = [
 
 matcher.add("BODY_PATTERN", [body_pattern])
 
-# pattern for "he touched her arm"--verb from list followed by body part as object?
+# pattern for "he touched her arm"--verb from list then body part as object?
+
+# write a wrapper which pulls in one of several patterns?
 
 filename = whichfile()
 
