@@ -1,4 +1,6 @@
-from tkinter import filedialog
+"""
+Choose a txt file to open
+"""
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 
