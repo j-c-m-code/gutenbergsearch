@@ -2,7 +2,7 @@
 Loads an existing Spacy doc then uses the Matcher on it
 """
 
-# import third-party modules
+# import thir d-party modules
 import spacy
 from spacy.tokens import Doc
 from spacy.vocab import Vocab
@@ -25,11 +25,17 @@ body_pattern = [
     {"LEMMA": {"IN": tm.bodypart_list}, "POS": "NOUN"},
 ]
 
-matcher.add("BODY_PATTERN", [body_pattern])
+verb_pattern = [
+    # a touch verb
+    {"LEMMA": {"IN": tm.touch_list}, "POS": "VERB"},
+    # zero or more non-body-part tokens
+    {"LEMMA": {"NOT_IN": tm.bodypart_list}, "OP": "*"},
+    # a body part (noun)
+    {"LEMMA": {"IN": tm.bodypart_list}, "POS": "NOUN"},
+]
 
-# pattern for "he touched her arm"--verb from list then body part as object?
+matcher.add("VERB_PATTERN", [verb_pattern])
 
-# write a wrapper which pulls in one of several patterns?
 
 filename = whichfile()
 
