@@ -30,8 +30,9 @@ verb_pattern = [
     {"LEMMA": {"IN": tm.touch_list}, "POS": "VERB"},
     # zero or more non-body-part tokens
     {"LEMMA": {"NOT_IN": tm.bodypart_list}, "OP": "*"},
-    # a body part (noun)
-    {"LEMMA": {"IN": tm.bodypart_list}, "POS": "NOUN"},
+    # a body part that is a direct object
+    # dependencies must be LOWERCASED
+    {"LEMMA": {"IN": tm.bodypart_list}, "DEP": "dobj"},
 ]
 
 matcher.add("VERB_PATTERN", [verb_pattern])
