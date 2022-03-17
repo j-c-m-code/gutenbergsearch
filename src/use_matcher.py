@@ -60,4 +60,4 @@ with open(short_name + ".txt", "w") as writer:
             # sent is a Spacy span object.
             # ask for its text attribute to get the text
             writer.write(sent.text)
-            writer.write("\n")
+            writer.write("\n\n")
