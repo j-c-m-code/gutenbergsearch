@@ -55,9 +55,9 @@ with open(short_name + ".txt", "w") as writer:
         matches = matcher(sent)
         if len(matches) > 0:  # if we found at least one match
             counter += 1
-            writer.write("Match number " + str(counter))
-            writer.write("from " + filename)
+            writer.write("Match number " + str(counter) + "\n")
+            writer.write("from " + filename + "\n")
             # sent is a Spacy span object.
             # ask for its text attribute to get the text
-            writer.write(sent.text) 
-            writer.write("\n\r")
+            writer.write(sent.text)
+            writer.write("\n")
