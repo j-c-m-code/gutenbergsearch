@@ -1,8 +1,10 @@
 """
 Loads an existing Spacy doc then uses the Matcher on it
 """
+# first import standard modules
+from pathlib import Path
 
-# import thir d-party modules
+# import third-party modules
 import spacy
 from spacy.tokens import Doc
 from spacy.vocab import Vocab
@@ -46,11 +48,14 @@ sentences = list(doc.sents)
 
 counter = 0
 
-for sent in sentences:
-    matches = matcher(sent)
-    if len(matches) > 0:  # if we found at least one match
-        counter += 1
-        print("Match number " + str(counter))
-        print("from " + filename)
-        print(sent)
-        print()
+short_name = Path(filename).stem
+
+with open(short_name + ".txt", "w") as writer:
+    for sent in sentences:
+        matches = matcher(sent)
+        if len(matches) > 0:  # if we found at least one match
+            counter += 1
+            writer.write("Match number " + str(counter))
+            writer.write("from " + filename)
+            writer.write(sent)
+            writer.write()
