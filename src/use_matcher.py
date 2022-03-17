@@ -57,5 +57,7 @@ with open(short_name + ".txt", "w") as writer:
             counter += 1
             writer.write("Match number " + str(counter))
             writer.write("from " + filename)
-            writer.write(sent)
+            # sent is a Spacy span object.
+            # ask for its text attribute to get the text
+            writer.write(sent.text)) 
             writer.write()
