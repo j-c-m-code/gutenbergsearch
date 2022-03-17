@@ -50,7 +50,7 @@ counter = 0
 
 short_name = Path(filename).stem
 
-with open(short_name + ".txt", "w") as writer:
+with open(rf"C:\Users\james\{short_name}.txt", "w") as writer:
     for sent in sentences:
         matches = matcher(sent)
         if len(matches) > 0:  # if we found at least one match
