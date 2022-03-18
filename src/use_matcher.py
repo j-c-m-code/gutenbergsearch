@@ -14,6 +14,10 @@ from spacy.matcher import Matcher
 from askfile import whichfile
 import terms as tm
 
+# which search to do? "body" or "verb"?
+
+FLAG = "body"
+
 nlp = spacy.load("en_core_web_lg")
 
 matcher = Matcher(nlp.vocab)
@@ -39,6 +43,7 @@ verb_pattern = [
 
 matcher.add("VERB_PATTERN", [verb_pattern])
 
+matcher.add("BODY_PATTERN", [body_pattern])
 
 filename = whichfile()
 
@@ -50,7 +55,7 @@ counter = 0
 
 short_name = Path(filename).stem
 
-with open(rf"C:\Users\james\{short_name}.txt", "w") as writer:
+with open(rf"C:\Users\james\{short_name} use_matcher output.txt", "w") as writer:
     for sent in sentences:
         matches = matcher(sent)
         if len(matches) > 0:  # if we found at least one match
