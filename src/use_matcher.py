@@ -2,6 +2,8 @@
 Loads an existing Spacy doc then uses the Matcher on it
 """
 # first import standard modules
+import glob
+import os
 from pathlib import Path
 
 # import third-party modules
@@ -45,17 +47,25 @@ directoryname = whichdir()
 
 os.chdir(directoryname)
 
-filelist = glob.glob("*.txt")
+filelist = glob.glob("*")
+
+print(filelist)
 
 for filename in filelist:
+
+    print(filename)
 
     doc = Doc(Vocab()).from_disk(filename)
 
     sentences = list(doc.sents)
 
+    print(sentences[0])
+
     counter = 0
 
     short_name = Path(filename).stem
+
+    print(short_name)
 
     with open(rf"C:\Users\james\{short_name} use_matcher output.txt", "w") as writer:
         for sent in sentences:
