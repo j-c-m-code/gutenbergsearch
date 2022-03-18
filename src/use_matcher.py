@@ -11,12 +11,8 @@ from spacy.vocab import Vocab
 from spacy.matcher import Matcher
 
 # then import my own code (PEP-8 convention)
-from askfile import whichfile
+from askdir import whichdir
 import terms as tm
-
-# which search to do? "body" or "verb"?
-
-FLAG = "body"
 
 nlp = spacy.load("en_core_web_lg")
 
@@ -45,24 +41,30 @@ matcher.add("VERB_PATTERN", [verb_pattern])
 
 matcher.add("BODY_PATTERN", [body_pattern])
 
-filename = whichfile()
+directoryname = whichdir()
 
-doc = Doc(Vocab()).from_disk(filename)
+os.chdir(directoryname)
 
-sentences = list(doc.sents)
+filelist = glob.glob("*.txt")
 
-counter = 0
+for filename in filelist:
 
-short_name = Path(filename).stem
+    doc = Doc(Vocab()).from_disk(filename)
 
-with open(rf"C:\Users\james\{short_name} use_matcher output.txt", "w") as writer:
-    for sent in sentences:
-        matches = matcher(sent)
-        if len(matches) > 0:  # if we found at least one match
-            counter += 1
-            writer.write("Match number " + str(counter) + "\n")
-            writer.write("from " + filename + "\n")
-            # sent is a Spacy span object.
-            # ask for its text attribute to get the text
-            writer.write(sent.text)
-            writer.write("\n\n")
+    sentences = list(doc.sents)
+
+    counter = 0
+
+    short_name = Path(filename).stem
+
+    with open(rf"C:\Users\james\{short_name} use_matcher output.txt", "w") as writer:
+        for sent in sentences:
+            matches = matcher(sent)
+            if len(matches) > 0:  # if we found at least one match
+                counter += 1
+                writer.write("Match number " + str(counter) + "\n")
+                writer.write("from " + filename + "\n")
+                # sent is a Spacy span object.
+                # ask for its text attribute to get the text
+                writer.write(sent.text)
+                writer.write("\n\n")
