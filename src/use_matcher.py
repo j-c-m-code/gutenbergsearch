@@ -49,25 +49,20 @@ os.chdir(directoryname)
 
 filelist = glob.glob("*")
 
-print(filelist)
 
 for filename in filelist:
-
-    print(filename)
 
     doc = Doc(Vocab()).from_disk(filename)
 
     sentences = list(doc.sents)
 
-    print(sentences[0])
-
     counter = 0
 
     short_name = Path(filename).stem
 
-    print(short_name)
-
-    with open(rf"C:\Users\james\{short_name} use_matcher output.txt", "w") as writer:
+    with open(
+        rf"C:\Users\james\{short_name} use_matcher output.txt", "w", encoding="utf-8"
+    ) as writer:
         for sent in sentences:
             matches = matcher(sent)
             if len(matches) > 0:  # if we found at least one match
