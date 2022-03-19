@@ -1,3 +1,6 @@
+"""
+Trial code for Spacy matcher
+"""
 # import third-party modules
 import spacy
 from spacy.matcher import Matcher
@@ -12,6 +15,9 @@ His eyes roamed her face and her eyes. I touch your ear.
 
 
 def on_match(matcher, doc, id, matches):
+    """
+    on_match function as suggested in Spacy documentation
+    """
     print(id)
     print(sent)
     to_label = yes_or_no()
@@ -19,6 +25,9 @@ def on_match(matcher, doc, id, matches):
 
 
 def yes_or_no():
+    """
+    asks for input; validates for 'y' or 'n'
+    """
     while "the answer is invalid":
         reply = str(input("Label as touch? (y/n) > ")).lower().strip()
         if reply[:1] == "y":

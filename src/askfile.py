@@ -1,15 +1,19 @@
+"""
+Opens a Tkinter window for choosing a file
+Using currently to open Spacy docs from disk
+"""
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 
 
 def whichfile():
     """
-    Opens a Tkinter window for choosing a text file
+    Opens a Tkinter window for choosing a file
+    Using currently to open Spacy docs from disk
     """
     # we don't want a full GUI, so keep the root window from appearing
     Tk().withdraw()
 
-    # filetypes option restricts us to text files only
     filename = askopenfilename()
     return filename
 
