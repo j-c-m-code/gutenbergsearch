@@ -41,6 +41,7 @@ bodypart_list = [
     "ear",
     "elbow",
     "eye",
+    "face",
     "finger",
     "foot",
     "hair",
