@@ -64,11 +64,12 @@ for filename in filelist:
         rf"C:\Users\james\{short_name} use_matcher output.txt", "w", encoding="utf-8"
     ) as writer:
         for sent in sentences:
+            # only need first match per sentence, then on_match
             matches = matcher(sent)
             if len(matches) > 0:  # if we found at least one match
                 counter += 1
                 writer.write("Match number " + str(counter) + "\n")
-                writer.write("from " + filename + "\n")
+                writer.write("from " + str(Path(filename)) + "\n")
                 # sent is a Spacy span object.
                 # ask for its text attribute to get the text
                 writer.write(sent.text)
