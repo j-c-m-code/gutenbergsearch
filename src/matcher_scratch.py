@@ -13,7 +13,7 @@ His eyes roamed her face and her eyes. I touch your ear.
 
 
 def on_match(matcher, doc, id, matches):
-    print(matches)
+    print(id)
     print(sent)
     to_label = yes_or_no()
     print(to_label)
