@@ -39,9 +39,7 @@ verb_pattern = [
     {"LEMMA": {"IN": tm.bodypart_list}, "DEP": "dobj"},
 ]
 
-matcher.add("VERB_PATTERN", [verb_pattern])
-
-matcher.add("BODY_PATTERN", [body_pattern])
+matcher.add("PATTERN", [verb_pattern, body_pattern])
 
 directoryname = whichdir()
 
