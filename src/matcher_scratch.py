@@ -1,6 +1,5 @@
 # import third-party modules
 import spacy
-from spacy.vocab import Vocab
 from spacy.matcher import Matcher
 
 # then import my own code (PEP-8 convention)
