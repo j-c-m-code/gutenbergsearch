@@ -1,19 +1,16 @@
 """
 Loads an existing Spacy doc then uses the Matcher on it
 """
-# first import standard modules
 import glob
 import os
 from pathlib import Path
 
-# import third-party modules
 import spacy
-from spacy.tokens import Doc
 from spacy.matcher import Matcher
+from spacy.tokens import Doc
 
-# then import my own code (PEP-8 convention)
-from askdir import whichdir
 import terms as tm
+from askdir import whichdir
 
 nlp = spacy.load("en_core_web_lg")
 
