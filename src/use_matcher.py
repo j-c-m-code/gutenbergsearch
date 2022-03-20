@@ -35,7 +35,7 @@ verb_pattern = [
     {"LEMMA": {"NOT_IN": tm.bodypart_list}, "OP": "*"},
     # a body part that is a direct object
     # dependencies must be LOWERCASED
-    {"LEMMA": {"IN": tm.bodypart_list}, "DEP": "dobj"},
+    {"LEMMA": {"IN": tm.bodypart_list}, "DEP": {"IN": ["dobj", "pobj"]}},
 ]
 
 matcher.add("PATTERNS", [verb_pattern, body_pattern])
