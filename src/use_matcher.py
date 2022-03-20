@@ -1,5 +1,5 @@
 """
-Loads an existing Spacy doc then uses the Matcher on it
+Loads a folder of existing Spacy docs then uses the Matcher on them
 """
 import glob
 import os
