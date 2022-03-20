@@ -53,7 +53,7 @@ for filename in filelist:
 
     sentences = list(doc.sents)
 
-    counter = 0
+    COUNTER = 0
 
     short_name = Path(filename).stem
 
@@ -64,8 +64,8 @@ for filename in filelist:
             # only need first match per sentence, then on_match
             matches = matcher(sent)
             if len(matches) > 0:  # if we found at least one match
-                counter += 1
-                writer.write("Match number " + str(counter) + "\n")
+                COUNTER += 1
+                writer.write("Match number " + str(COUNTER) + "\n")
                 writer.write("from " + str(Path(filename)) + "\n")
                 # sent is a Spacy span object.
                 # ask for its text attribute to get the text
