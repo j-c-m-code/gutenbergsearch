@@ -38,13 +38,50 @@ verb_pattern = [
     {"LEMMA": {"IN": tm.bodypart_list}, "DEP": "dobj"},
 ]
 
-matcher.add("PATTERN", [verb_pattern, body_pattern])
+matcher.add("PATTERNS", [verb_pattern, body_pattern])
 
 directoryname = whichdir()
 
 os.chdir(directoryname)
 
 filelist = glob.glob("*")
+
+
+def process_match(sentence):
+    print(sentence)
+    to_label = yes_or_no()
+    if to_label:
+        with open(
+            rf"C:\Users\james\testing use_matcher output.txt",
+            "w",
+            encoding="utf-8",
+        ) as writer:
+            writer.write("from this file\n")
+            # sent is a Spacy span object.
+            # ask for its text attribute to get the text
+            writer.write(sentence)
+            writer.write("\n\n")
+
+
+def yes_or_no():
+    """
+    asks for input; validates for 'y' or 'n'
+    """
+    while "the answer is invalid":
+        reply = str(input("Label as touch? (y/n) > ")).lower().strip()
+        if reply[:1] == "y":
+            return True
+        if reply[:1] == "n":
+            return False
+    with open(
+        rf"C:\Users\james\{short_name} use_matcher output.txt", "w", encoding="utf-8"
+    ) as writer:
+        writer.write("Match number " + str(COUNTER) + "\n")
+        writer.write("from " + str(Path(filename)) + "\n")
+        # sent is a Spacy span object.
+        # ask for its text attribute to get the text
+        writer.write(sent.text)
+        writer.write("\n\n")
 
 
 for filename in filelist:
@@ -57,17 +94,10 @@ for filename in filelist:
 
     short_name = Path(filename).stem
 
-    with open(
-        rf"C:\Users\james\{short_name} use_matcher output.txt", "w", encoding="utf-8"
-    ) as writer:
-        for sent in sentences:
-            # only need first match per sentence, then on_match
-            matches = matcher(sent)
-            if len(matches) > 0:  # if we found at least one match
-                COUNTER += 1
-                writer.write("Match number " + str(COUNTER) + "\n")
-                writer.write("from " + str(Path(filename)) + "\n")
-                # sent is a Spacy span object.
-                # ask for its text attribute to get the text
-                writer.write(sent.text)
-                writer.write("\n\n")
+    for sent in sentences:
+        # Spacy matcher works on a Doc or a Span (calling with a Span here)
+        matches = matcher(sent)
+        if len(matches) > 0:
+            # sent.text sends only the text of the sentence,
+            # not the Spacy object
+            process_match(sent.text)
