@@ -13,7 +13,6 @@ import terms as tm
 from askdir import whichdir
 
 nlp = spacy.load("en_core_web_lg")
-
 matcher = Matcher(nlp.vocab)
 
 body_pattern = [
@@ -36,11 +35,8 @@ verb_pattern = [
 ]
 
 matcher.add("PATTERNS", [verb_pattern, body_pattern])
-
 directoryname = whichdir()
-
 os.chdir(directoryname)
-
 filelist = glob.glob("*")
 
 
@@ -54,12 +50,9 @@ def process_match(sentence):
     if to_label:
         with open(
             rf"C:\Users\james\{short_name} use_matcher output.txt",
-            "w",
+            "a",  # we want append mode, not write mode
             encoding="utf-8",
         ) as writer:
-            writer.write("from this file\n")
-            # sent is a Spacy span object.
-            # ask for its text attribute to get the text
             writer.write(sentence)
             writer.write("\n\n")
 
@@ -80,3 +73,10 @@ for filename in filelist:
     doc = Doc(nlp.vocab).from_disk(filename)
     sentences = list(doc.sents)
     short_name = Path(filename).stem
+    for sent in sentences:
+        # Spacy matcher works on a Doc or a Span (calling with a Span here)
+        matches = matcher(sent)
+        if len(matches) > 0:
+            # sent.text sends only the text of the sentence,
+            # not the Spacy object
+            process_match(sent.text)
