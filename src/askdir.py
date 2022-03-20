@@ -8,10 +8,11 @@ def whichdir():
     """
     Opens a Tkinter window for choosing a directory
     """
-    root = Tk()
-    root.directory = filedialog.askdirectory()
-    root.destroy()  # closes the Tkinter window
-    return root.directory
+    # we don't want a full GUI, so keep the root window from appearing
+    Tk().withdraw()
+
+    directory = filedialog.askdirectory()
+    return directory
 
 
 if __name__ == "__main__":
