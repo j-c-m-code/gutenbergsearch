@@ -49,7 +49,7 @@ def process_match(sentence):
     to_label = yes_or_no()
     if to_label:
         with open(
-            rf"C:\Users\james\{short_name} use_matcher output.txt",
+            rf"C:\Users\james\OneDrive\Desktop\{short_name} use_matcher output.txt",
             "a",  # we want append mode, not write mode
             encoding="utf-8",
         ) as writer:
