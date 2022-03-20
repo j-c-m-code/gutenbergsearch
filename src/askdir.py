@@ -8,9 +8,9 @@ def whichdir():
     """
     Opens a Tkinter window for choosing a directory
     """
+    root = Tk()
     # we don't want a full GUI, so keep the root window from appearing
-    Tk().withdraw()
-
+    root.withdraw()
     directory = filedialog.askdirectory()
     return directory
 
