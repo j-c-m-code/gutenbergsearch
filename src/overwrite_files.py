@@ -99,6 +99,9 @@ def _main():
                 # (which is also the ASCII "regular" single quote mark)
                 contents = re.sub(r"[‘’]", r"'", contents)
 
+                # replace two hyphens with an em dash
+                contents = re.sub(r"--", r"—", contents)
+
                 # replace left/right quote marks with standard quote mark
                 # note I use single quotes to specify the strings here b/c
                 # otherwsie my replacement quotation mark gets messed up
