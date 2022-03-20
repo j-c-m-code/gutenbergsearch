@@ -2,6 +2,8 @@
 Intended to clean up and overwrite
 utf-8 text files downloaded from
 Project Gutenberg
+
+expects Windows line endings: \r\n
 """
 # first import standard modules
 import re
