@@ -49,7 +49,7 @@ filelist = glob.glob("*")
 
 for filename in filelist:
 
-    doc = Doc(Vocab()).from_disk(filename)
+    doc = Doc(nlp.vocab).from_disk(filename)
 
     sentences = list(doc.sents)
 
