@@ -53,7 +53,7 @@ def write_results(sentence_list: list, match_list: list, short_nm: str) -> None:
     Writes all the matched sentences to a txt file
     along with some surrounding sentences for context
     """
-    context_distance = 1
+    context_distance = 2
     output_directory = whichdir()
 
     with open(
