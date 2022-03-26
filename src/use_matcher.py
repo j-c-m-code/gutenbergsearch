@@ -58,14 +58,24 @@ def write_results(sentence_list: list, match_list: list) -> None:
     Writes all the matched sentences to a txt file
     along with some surrounding sentences for context
     """
+    CONTEXT_DISTANCE = 1
+
     with open(
         rf"{output_directory}{short_name} use_matcher output.txt",
         "a",  # we want append mode, not write mode
         encoding="utf-8",
     ) as writer:
         for match in match_list:
-            writer.write()
-            writer.write(sentence_list[0])
+            writer.write("Match in sentence " + str(match) + " from " + short_name)
+            # prints from one sentence before to one
+            # sentence after the match
+
+            # ERROR expected str instance, spacy.tokens.span.Span found
+
+            text_to_write = "".join(
+                sentence_list[(match - CONTEXT_DISTANCE) : (match + CONTEXT_DISTANCE)]
+            )
+            writer.write(text_to_write)
             writer.write("\n\n")
 
 
