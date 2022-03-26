@@ -34,11 +34,6 @@ verb_pattern = [
     {"LEMMA": {"IN": tm.bodypart_list}, "DEP": {"IN": ["dobj", "pobj"]}},
 ]
 
-matcher.add("PATTERNS", [verb_pattern, body_pattern])  # type: ignore
-source_directory = whichdir()
-output_directory = whichdir()
-os.chdir(source_directory)
-filelist = glob.glob("*")
 
 # using type hints
 def is_match(sentence: str) -> bool:
@@ -92,18 +87,26 @@ def yes_or_no() -> bool:
             return False
 
 
-for filename in filelist:
-    matchlist = []
-    doc = Doc(nlp.vocab).from_disk(filename)
-    # a sent is a kind of Span
-    sentences = list(doc.sents)
-    short_name = Path(filename).stem
-    for count, sent in enumerate(sentences):
-        # Spacy matcher works on a Doc or a Span (calling with a Span here)
-        matches = matcher(sent)
-        if len(matches) > 0:
-            # sent.text sends only the text of the sentence,
-            # not the Spacy object
-            if is_match(sent.text):
-                matchlist.append(count)
-    write_results(sentences, matchlist)
+if __name__ == "__main__":
+
+    matcher.add("PATTERNS", [verb_pattern, body_pattern])  # type: ignore
+    source_directory = whichdir()
+    output_directory = whichdir()
+    os.chdir(source_directory)
+    filelist = glob.glob("*")
+
+    for filename in filelist:
+        matchlist = []
+        doc = Doc(nlp.vocab).from_disk(filename)
+        # a sent is a kind of Span
+        sentences = list(doc.sents)
+        short_name = Path(filename).stem
+        for count, sent in enumerate(sentences):
+            # Spacy matcher works on a Doc or a Span (calling with a Span here)
+            matches = matcher(sent)
+            if len(matches) > 0:
+                # sent.text sends only the text of the sentence,
+                # not the Spacy object
+                if is_match(sent.text):
+                    matchlist.append(count)
+        write_results(sentences, matchlist)
