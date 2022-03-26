@@ -34,33 +34,40 @@ verb_pattern = [
     {"LEMMA": {"IN": tm.bodypart_list}, "DEP": {"IN": ["dobj", "pobj"]}},
 ]
 
-matcher.add("PATTERNS", [verb_pattern, body_pattern])
-directoryname = whichdir()
-os.chdir(directoryname)
+matcher.add("PATTERNS", [verb_pattern, body_pattern])  # type: ignore
+source_directory = whichdir()
+output_directory = whichdir()
+os.chdir(source_directory)
 filelist = glob.glob("*")
 
-
-def process_match(sentence):
+# using type hints
+def is_match(sentence: str) -> bool:
     """
     Is this a real match?
-    If yes, write it to the txt file
+    Return True or False
     """
     print(sentence)
     to_label = yes_or_no()
-    if to_label:
-        with open(
-            rf"C:\Users\james\OneDrive\Desktop\{short_name} use_matcher output.txt",
-            "a",  # we want append mode, not write mode
-            encoding="utf-8",
-        ) as writer:
-            writer.write(sentence)
-            writer.write("\n\n")
+    # below line returns either True or False
+    # Pylint prefers this structure over an if ... else
+    return bool(to_label)
+
+
+# def write_results(matchlist):
+#     with open(
+#         rf"{output_directory}{short_name} use_matcher output.txt",
+#         "a",  # we want append mode, not write mode
+#         encoding="utf-8",
+#     ) as writer:
+#         writer.write(sentence)
+#         writer.write("\n\n")
 
 
 def yes_or_no():
     """
     asks for input; validates for 'y' or 'n'
     """
+    # this loop works because non-empty strings evaluate as truthy in Python
     while "the answer is invalid":
         reply = str(input("Label as touch? (y/n) > ")).lower().strip()
         if reply[:1] == "y":
@@ -70,13 +77,17 @@ def yes_or_no():
 
 
 for filename in filelist:
+    matchlist = []
     doc = Doc(nlp.vocab).from_disk(filename)
+    # a sent is a kind of Span
     sentences = list(doc.sents)
     short_name = Path(filename).stem
-    for sent in sentences:
+    for count, sent in enumerate(sentences):
         # Spacy matcher works on a Doc or a Span (calling with a Span here)
         matches = matcher(sent)
         if len(matches) > 0:
             # sent.text sends only the text of the sentence,
             # not the Spacy object
-            process_match(sent.text)
+            if is_match(sent.text):
+                matchlist.append(count)
+    # print(matchlist)
