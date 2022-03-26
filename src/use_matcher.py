@@ -64,10 +64,12 @@ def write_results(sentence_list: list, match_list: list, short_nm: str) -> None:
         # match is a list of indices
         for match in match_list:
             writer.write("Match in sentence " + str(match) + " from " + short_nm + "\n")
-            # prints from one sentence before to one
-            # sentence after the match
-            text_to_write = sentence_list[match - CONTEXT_DISTANCE].text
-            writer.write(text_to_write)
+            # prints context around the match
+            # remember, range stops BEFORE the stop argument
+            for i in range(0, 2 * CONTEXT_DISTANCE + 1):
+                index = match - CONTEXT_DISTANCE + i
+                text_to_write = sentence_list[index].text
+                writer.write(text_to_write)
             writer.write("\n\n")
 
 
