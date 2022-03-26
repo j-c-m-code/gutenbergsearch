@@ -61,16 +61,12 @@ def write_results(sentence_list: list, match_list: list, short_nm: str) -> None:
         "a",  # we want append mode, not write mode
         encoding="utf-8",
     ) as writer:
+        # match is a list of indices
         for match in match_list:
-            writer.write("Match in sentence " + str(match) + " from " + short_nm)
+            writer.write("Match in sentence " + str(match) + " from " + short_nm + "\n")
             # prints from one sentence before to one
             # sentence after the match
-
-            # ERROR expected str instance, spacy.tokens.span.Span found
-
-            text_to_write = "".join(
-                sentence_list[(match - CONTEXT_DISTANCE) : (match + CONTEXT_DISTANCE)]
-            )
+            text_to_write = sentence_list[match - CONTEXT_DISTANCE].text
             writer.write(text_to_write)
             writer.write("\n\n")
 
