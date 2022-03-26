@@ -53,7 +53,7 @@ def write_results(sentence_list: list, match_list: list, short_nm: str) -> None:
     Writes all the matched sentences to a txt file
     along with some surrounding sentences for context
     """
-    CONTEXT_DISTANCE = 1
+    context_distance = 1
     output_directory = whichdir()
 
     with open(
@@ -66,8 +66,8 @@ def write_results(sentence_list: list, match_list: list, short_nm: str) -> None:
             writer.write("Match in sentence " + str(match) + " from " + short_nm + "\n")
             # prints context around the match
             # remember, range stops BEFORE the stop argument
-            for i in range(0, 2 * CONTEXT_DISTANCE + 1):
-                index = match - CONTEXT_DISTANCE + i
+            for i in range(0, 2 * context_distance + 1):
+                index = match - context_distance + i
                 text_to_write = sentence_list[index].text
                 writer.write(text_to_write)
             writer.write("\n\n")
