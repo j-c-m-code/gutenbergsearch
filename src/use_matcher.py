@@ -53,17 +53,23 @@ def is_match(sentence: str) -> bool:
     return bool(to_label)
 
 
-# def write_results(matchlist):
-#     with open(
-#         rf"{output_directory}{short_name} use_matcher output.txt",
-#         "a",  # we want append mode, not write mode
-#         encoding="utf-8",
-#     ) as writer:
-#         writer.write(sentence)
-#         writer.write("\n\n")
+def write_results(sentence_list: list, match_list: list) -> None:
+    """
+    Writes all the matched sentences to a txt file
+    along with some surrounding sentences for context
+    """
+    with open(
+        rf"{output_directory}{short_name} use_matcher output.txt",
+        "a",  # we want append mode, not write mode
+        encoding="utf-8",
+    ) as writer:
+        for match in match_list:
+            writer.write()
+            writer.write(sentence_list[0])
+            writer.write("\n\n")
 
 
-def yes_or_no():
+def yes_or_no() -> bool:
     """
     asks for input; validates for 'y' or 'n'
     """
@@ -90,4 +96,4 @@ for filename in filelist:
             # not the Spacy object
             if is_match(sent.text):
                 matchlist.append(count)
-    # print(matchlist)
+    write_results(sentences, matchlist)
