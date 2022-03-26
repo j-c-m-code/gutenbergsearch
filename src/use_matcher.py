@@ -48,16 +48,17 @@ def is_match(sentence: str) -> bool:
     return bool(to_label)
 
 
-def write_results(sentence_list: list, match_list: list, short_nm: str) -> None:
+def write_results(
+    sentence_list: list, match_list: list, short_nm: str, output_dir: str
+) -> None:
     """
     Writes all the matched sentences to a txt file
     along with some surrounding sentences for context
     """
     context_distance = 2
-    output_directory = whichdir()
 
     with open(
-        rf"{output_directory}\{short_nm} use_matcher output.txt",
+        rf"{output_dir}\{short_nm} use_matcher output.txt",
         "a",  # we want append mode, not write mode
         encoding="utf-8",
     ) as writer:
@@ -92,6 +93,7 @@ if __name__ == "__main__":
     source_directory = whichdir()
     os.chdir(source_directory)
     filelist = glob.glob("*")
+    output_directory = whichdir()
 
     for filename in filelist:
         matchlist = []
@@ -107,4 +109,4 @@ if __name__ == "__main__":
                 # not the Spacy object
                 if is_match(sent.text):
                     matchlist.append(count)
-        write_results(sentences, matchlist, short_name)
+        write_results(sentences, matchlist, short_name, output_directory)
