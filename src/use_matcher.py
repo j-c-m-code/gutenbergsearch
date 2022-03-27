@@ -71,7 +71,10 @@ def write_results(
                 index = match - context_distance + i
                 text_to_write = sentence_list[index].text
                 writer.write(text_to_write)
-            writer.write("\n\n")
+                # puts a space after each sentence but the last
+                if i < 2 * context_distance:
+                    writer.write(" ")
+            writer.write("\n\n\n")
 
 
 def yes_or_no() -> bool:
