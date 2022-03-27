@@ -12,7 +12,8 @@ from spacy.tokens import Doc
 import terms as tm
 from askdir import whichdir
 
-nlp = spacy.load("en_core_web_lg")
+# not using named entity recognition, so disable it for speed
+nlp = spacy.load("en_core_web_lg", disable=["ner"])
 matcher = Matcher(nlp.vocab)
 
 body_pattern = [
