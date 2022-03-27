@@ -31,10 +31,12 @@ def _main():
                 # stripping the headers
                 contents = cgh.strip_headers(contents)
 
-                # removes chapter numbers;
-                # finds lines with only "Chapter III" or "III" on them
-                # Python expects \n, not \r\n, so I can't use start/end anchors
-                # and the Multiline flag doesn't help me
+                """
+                removes chapter numbers;
+                finds lines with only "Chapter III" or "III" on them
+                Python expects \n, not \r\n, so I can't use start/end anchors
+                and the Multiline flag doesn't help me
+                """
                 chapter_line_roman = re.compile(
                     r"""
                     (\r\n)               # start of line
@@ -61,8 +63,10 @@ def _main():
 
                 contents = re.sub(chapter_line_numeric, "\r\n", contents)
 
-                # project gutenberg texts end each line with a newline;
-                # code below formats for word wrap
+                """
+                project gutenberg texts end each line with a newline;
+                code below formats for word wrap
+                """
                 one_newline_from_multiple = re.compile(
                     r"""
                 (?<!\r\n)   # not preceeded by newline (negative lookbehind)
@@ -91,20 +95,26 @@ def _main():
                 # replace one or more spaces with one space
                 contents = re.sub(r"( )+", r"\1", contents)
 
-                # replace underscores (sometimes used to indicate italics)
-                # with nothing
+                """
+                replace underscores (sometimes used to indicate italics)
+                with nothing
+                """
                 contents = re.sub(r"_", "", contents)
 
-                # replace left/right single quote marks with apostrophe
-                # (which is also the ASCII "regular" single quote mark)
+                """
+                replace left/right single quote marks with apostrophe
+                (which is also the ASCII "regular" single quote mark)
+                """
                 contents = re.sub(r"[‘’]", r"'", contents)
 
                 # replace two hyphens with an em dash
                 contents = re.sub(r"--", r"—", contents)
 
-                # replace left/right quote marks with standard quote mark
-                # note I use single quotes to specify the strings here b/c
-                # otherwsie my replacement quotation mark gets messed up
+                """
+                replace left/right quote marks with standard quote mark
+                note I use single quotes to specify the strings here b/c
+                otherwsie my replacement quotation mark gets messed up
+                """
                 contents = re.sub(r"[“”]", r'"', contents)
 
             with myfs.open(path, mode="w") as current_file:
