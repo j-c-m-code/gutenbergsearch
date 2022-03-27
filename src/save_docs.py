@@ -14,9 +14,10 @@ from askdir import whichdir
 
 nlp = spacy.load("en_core_web_lg")
 
-directoryname = whichdir()
-os.chdir(directoryname)
+source_directory = whichdir()
+os.chdir(source_directory)
 filelist = glob.glob("*")
+output_directory = whichdir()
 
 for filename in filelist:
     with open(filename, "r", encoding="utf-8") as f:
@@ -32,4 +33,4 @@ for filename in filelist:
 
     # r for raw string--no escape characters
     # f for format string--allow me to pass in variable
-    doc.to_disk(rf"C:\Users\james\OneDrive\Desktop\{short_name}")
+    doc.to_disk(rf"{output_directory}\{short_name}")

@@ -92,11 +92,14 @@ def yes_or_no() -> bool:
 
 if __name__ == "__main__":
 
-    matcher.add("PATTERNS", [verb_pattern, body_pattern])  # type: ignore
+    # matcher.add("PATTERNS", [verb_pattern, body_pattern])  # type: ignore
+    matcher.add("PATTERNS", [verb_pattern])  # type: ignore
     source_directory = whichdir()
     os.chdir(source_directory)
     filelist = glob.glob("*")
     output_directory = whichdir()
+
+    test_counter = 0
 
     for filename in filelist:
         matchlist = []
@@ -108,8 +111,12 @@ if __name__ == "__main__":
             # Spacy matcher works on a Doc or a Span (calling with a Span here)
             matches = matcher(sent)
             if len(matches) > 0:
+                test_counter += 1
                 # sent.text sends only the text of the sentence,
                 # not the Spacy object
                 if is_match(sent.text):
                     matchlist.append(count)
-        write_results(sentences, matchlist, short_name, output_directory)
+        print("We got " + str(test_counter) + " total matches")
+        print("There were " + str(len(matchlist)) + " true positives")
+        print("There were " + str(test_counter - len(matchlist)) + " false positives")
+        # write_results(sentences, matchlist, short_name, output_directory)
