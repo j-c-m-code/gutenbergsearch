@@ -24,14 +24,23 @@ body_pattern = [
     {"LEMMA": {"IN": tm.bodypart_list}, "POS": "NOUN"},
 ]
 
-verb_pattern = [
+object_pattern = [
     # a touch verb
     {"LEMMA": {"IN": tm.touch_list}, "POS": "VERB"},
     # zero or more non-body-part tokens
     {"LEMMA": {"NOT_IN": tm.bodypart_list}, "OP": "*"},
-    # a body part that is a direct object
+    # a body part that is an object
     # dependencies must be LOWERCASED
     {"LEMMA": {"IN": tm.bodypart_list}, "DEP": {"IN": ["dobj", "pobj"]}},
+]
+
+subject_pattern = [
+    # a body part as subject
+    {"LEMMA": {"IN": tm.bodypart_list}, "DEP": {"IN": ["nsubj", "nsubjpass"]}},
+    # zero or more non-body-part tokens
+    {"LEMMA": {"NOT_IN": tm.bodypart_list}, "OP": "*"},
+    # a touch verb
+    {"LEMMA": {"IN": tm.touch_list}, "POS": "VERB"},
 ]
 
 
@@ -93,11 +102,11 @@ def yes_or_no() -> bool:
 if __name__ == "__main__":
 
     # matcher.add("PATTERNS", [verb_pattern, body_pattern])  # type: ignore
-    matcher.add("PATTERNS", [verb_pattern])  # type: ignore
+    matcher.add("PATTERNS", [subject_pattern, object_pattern])  # type: ignore
     source_directory = whichdir()
     os.chdir(source_directory)
     filelist = glob.glob("*")
-    output_directory = whichdir()
+    # output_directory = whichdir()
 
     test_counter = 0
 
@@ -119,4 +128,5 @@ if __name__ == "__main__":
         print("We got " + str(test_counter) + " total matches")
         print("There were " + str(len(matchlist)) + " true positives")
         print("There were " + str(test_counter - len(matchlist)) + " false positives")
+        print((str(len(sentences) - test_counter)) + " were not matched")
         # write_results(sentences, matchlist, short_name, output_directory)

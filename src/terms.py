@@ -7,6 +7,7 @@ touch_list = [
     "border",
     "brush",
     "caress",
+    "clasp",
     "contact",
     "embrace",
     "feel",
