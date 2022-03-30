@@ -1,4 +1,5 @@
 # <codecell>
+import csv
 import numpy
 import pandas
 import matplotlib.pyplot
@@ -17,14 +18,23 @@ file_to_read = askfile.whichfile()
 
 # <codecell>
 data_frame = pandas.read_csv(file_to_read, nrows=35, encoding="UTF-8", usecols=["text"])
+data_frame2 = pandas.read_csv(
+    file_to_read, nrows=35, encoding="UTF-8", usecols=["label"]
+)
 texts = [_ for _ in data_frame["text"]]
+labels = [_ for _ in data_frame2["label"]]
 
 # <codecell>
 matcher.add("PATTERNS", [use_matcher.subject_pattern, use_matcher.object_pattern])  # type: ignore
-for text in texts:
-    doc = nlp(text)
-    matches = matcher(doc)
-    if len(matches) > 0:
-        print("TRUE " + doc.text + "\n")
-    else:
-        print("FALSE " + doc.text + "\n")
+
+with open("test_output.csv", "a") as file:
+    writer = csv.writer(file)
+    writer.writerow(["text", "label", "result"])
+    for count, text in enumerate(texts):
+        doc = nlp(text)
+        matches = matcher(doc)
+
+        if len(matches) > 0:
+            writer.writerow([text, labels[count], "TRUE"])
+        else:
+            writer.writerow([text, labels[count], "FALSE"])
