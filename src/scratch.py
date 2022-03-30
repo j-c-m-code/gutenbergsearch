@@ -33,7 +33,6 @@ with open("test_output.csv", "a") as file:
     for count, text in enumerate(texts):
         doc = nlp(text)
         matches = matcher(doc)
-
         if len(matches) > 0:
             writer.writerow([text, labels[count], "TRUE"])
         else:
