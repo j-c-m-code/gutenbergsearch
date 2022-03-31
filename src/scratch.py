@@ -17,12 +17,11 @@ matcher = spacy.matcher.Matcher(nlp.vocab)
 file_to_read = askfile.whichfile()
 
 # <codecell>
-data_frame = pandas.read_csv(file_to_read, nrows=35, encoding="UTF-8", usecols=["text"])
-data_frame2 = pandas.read_csv(
-    file_to_read, nrows=35, encoding="UTF-8", usecols=["label"]
-)
+data_frame = pandas.read_csv(file_to_read, encoding="UTF-8")
+
 texts = [_ for _ in data_frame["text"]]
-labels = [_ for _ in data_frame2["label"]]
+labels = [_ for _ in data_frame["label"]]
+
 
 # <codecell>
 matcher.add("PATTERNS", [use_matcher.subject_pattern, use_matcher.object_pattern])  # type: ignore
