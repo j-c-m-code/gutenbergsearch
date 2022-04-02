@@ -24,7 +24,9 @@ labels = [_ for _ in data_frame["label"]]
 
 
 # <codecell>
-matcher.add("PATTERNS", [use_matcher.subject_pattern, use_matcher.object_pattern])  # type: ignore
+matcher.add(
+    "PATTERNS", [use_matcher.subject_pattern, use_matcher.object_pattern]
+)  # type: ignore
 
 with open("test_output.csv", "a") as file:
     writer = csv.writer(file)
