@@ -1,9 +1,9 @@
+"""testing out the matcher."""
 # <codecell>
 import csv
 import os
 import pandas
 
-import matplotlib.pyplot
 import seaborn
 import spacy
 
@@ -59,4 +59,3 @@ confusion_matrix = pandas.crosstab(
 # group_names = ["True Neg", "False Pos", "False Neg", "True Pos"]
 
 seaborn.heatmap(confusion_matrix, annot=True, cmap="Blues")
-matplotlib.pyplot.show()
