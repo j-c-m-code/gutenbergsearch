@@ -27,7 +27,8 @@ self_touch_actuals = [_ for _ in input_frame["self_touch_actual"]]
 
 # <codecell>
 matcher.add(
-    "PATTERNS", [use_matcher.subject_pattern, use_matcher.object_pattern]
+    "PATTERNS",
+    [use_matcher.subject_pattern, use_matcher.object_pattern, use_matcher.body_pattern],
 )  # type: ignore
 
 output_directory = askdir.whichdir()
