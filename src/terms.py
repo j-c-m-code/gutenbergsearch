@@ -12,6 +12,7 @@ touch_list = [
     "embrace",
     "feel",
     "fondle",
+    "gnaw",
     "grasp",
     "graze",
     "handle",
