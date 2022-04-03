@@ -35,7 +35,7 @@ output_directory = askdir.whichdir()
 
 os.chdir(output_directory)
 
-with open("test_output.csv", "a", newline="", encoding="UTF-8") as file:
+with open("test_output.csv", "w", newline="", encoding="UTF-8") as file:
     writer = csv.writer(file)
     writer.writerow(["text", "self_touch_actual", "self_touch_predicted"])
     for count, sentence in enumerate(sentences):
