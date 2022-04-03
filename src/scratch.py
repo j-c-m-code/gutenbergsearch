@@ -22,8 +22,8 @@ input_file = askfile.whichfile()
 # <codecell>
 input_frame = pandas.read_csv(input_file, encoding="UTF-8")
 
-sentences = [_ for _ in input_frame["sentence"]]
-self_touch_actuals = [_ for _ in input_frame["self_touch_actual"]]
+sentences = list(input_frame["sentence"])
+self_touch_actuals = list(input_frame["self_touch_actual"])
 
 
 # <codecell>
