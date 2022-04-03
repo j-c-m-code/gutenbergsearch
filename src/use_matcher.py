@@ -72,8 +72,6 @@ def yes_or_no() -> bool:
 
 
 if __name__ == "__main__":
-
-    # matcher.add("PATTERNS", [verb_pattern, body_pattern])  # type: ignore
     matcher.add(
         "PATTERNS",
         [patterns.subject_pattern, patterns.object_pattern, patterns.body_pattern],
