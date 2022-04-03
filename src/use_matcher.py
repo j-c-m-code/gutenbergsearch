@@ -16,6 +16,7 @@ from askdir import whichdir
 nlp = spacy.load("en_core_web_lg", disable=["ner"])
 matcher = Matcher(nlp.vocab)
 
+
 # using type hints
 def is_match(sentence: str) -> bool:
     """
@@ -79,7 +80,7 @@ if __name__ == "__main__":
     source_directory = whichdir()
     os.chdir(source_directory)
     filelist = glob.glob("*")
-    # output_directory = whichdir()
+    output_directory = whichdir()
 
     test_counter = 0
 
@@ -102,4 +103,4 @@ if __name__ == "__main__":
         print("There were " + str(len(matchlist)) + " true positives")
         print("There were " + str(test_counter - len(matchlist)) + " false positives")
         print((str(len(sentences) - test_counter)) + " were not matched")
-        # write_results(sentences, matchlist, short_name, output_directory)
+        write_results(sentences, matchlist, short_name, output_directory)
