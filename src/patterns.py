@@ -1,3 +1,6 @@
+"""
+patterns for the Spacy Matcher
+"""
 import terms as tm
 
 body_pattern = [
