@@ -27,10 +27,13 @@ touch_list = [
     "punch",
     "rub",
     "scratch",
+    "shave",
     "sit",
     "strike",
     "stroke",
+    "suck",
     "tap",
+    "tear",
     "tongue",
     "touch",
 ]
