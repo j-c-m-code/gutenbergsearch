@@ -31,7 +31,8 @@ def _main():
                 # stripping the headers
                 contents = cgh.strip_headers(contents)
 
-                """removes chapter numbers;
+                """
+                removes chapter numbers;
                 finds lines with only "Chapter III" or "III" on them
                 Python expects \n, not \r\n, so I can't use start/end anchors
                 and the Multiline flag doesn't help me
@@ -62,7 +63,8 @@ def _main():
 
                 contents = re.sub(chapter_line_numeric, "\r\n", contents)
 
-                """project gutenberg texts end each line with a newline;
+                """
+                project gutenberg texts end each line with a newline;
                 code below formats for word wrap
                 """
                 one_newline_from_multiple = re.compile(

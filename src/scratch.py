@@ -1,4 +1,4 @@
-"""testing out the matcher."""
+"""testing out the matcher"""
 # <codecell>
 import csv
 import os
@@ -56,7 +56,5 @@ confusion_matrix = pandas.crosstab(
     rownames=["Actual"],
     colnames=["Predicted"],
 )
-
-# group_names = ["True Neg", "False Pos", "False Neg", "True Pos"]
 
 seaborn.heatmap(confusion_matrix, annot=True, cmap="Blues")
