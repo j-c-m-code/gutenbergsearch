@@ -10,7 +10,6 @@ import spacy
 import askdir
 import askfile
 import patterns
-import use_matcher
 
 # <codecell>
 nlp = spacy.load("en_core_web_lg")
