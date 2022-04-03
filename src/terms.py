@@ -64,6 +64,7 @@ bodypart_list = [
     "mouth",
     "nose",
     "pinky",
+    "scalp",
     "skin",
     "skull",
     "thigh",
