@@ -9,41 +9,12 @@ import spacy
 from spacy.matcher import Matcher
 from spacy.tokens import Doc
 
-import terms as tm
+import patterns
 from askdir import whichdir
 
 # not using named entity recognition, so disable it for speed
 nlp = spacy.load("en_core_web_lg", disable=["ner"])
 matcher = Matcher(nlp.vocab)
-
-body_pattern = [
-    # a body part (noun)
-    {"LEMMA": {"IN": tm.bodypart_list}, "POS": "NOUN"},
-    # zero or more non-body-part tokens
-    {"LEMMA": {"NOT_IN": tm.bodypart_list}, "OP": "*"},
-    # a body part (noun)
-    {"LEMMA": {"IN": tm.bodypart_list}, "POS": "NOUN"},
-]
-
-object_pattern = [
-    # a touch verb
-    {"LEMMA": {"IN": tm.touch_list}, "POS": "VERB"},
-    # zero or more non-body-part tokens
-    {"LEMMA": {"NOT_IN": tm.bodypart_list}, "OP": "*"},
-    # a body part that is an object
-    # dependencies must be LOWERCASED
-    {"LEMMA": {"IN": tm.bodypart_list}, "DEP": {"IN": ["dobj", "pobj"]}},
-]
-
-subject_pattern = [
-    # a body part as subject
-    {"LEMMA": {"IN": tm.bodypart_list}, "DEP": {"IN": ["nsubj", "nsubjpass"]}},
-    # zero or more non-body-part tokens
-    {"LEMMA": {"NOT_IN": tm.bodypart_list}, "OP": "*"},
-    # a touch verb
-    {"LEMMA": {"IN": tm.touch_list}, "POS": "VERB"},
-]
-
 
 # using type hints
 def is_match(sentence: str) -> bool:
@@ -103,7 +74,10 @@ def yes_or_no() -> bool:
 if __name__ == "__main__":
 
     # matcher.add("PATTERNS", [verb_pattern, body_pattern])  # type: ignore
-    matcher.add("PATTERNS", [subject_pattern, object_pattern])  # type: ignore
+    matcher.add(
+        "PATTERNS",
+        [patterns.subject_pattern, patterns.object_pattern, patterns.body_pattern],
+    )  # type: ignore
     source_directory = whichdir()
     os.chdir(source_directory)
     filelist = glob.glob("*")
