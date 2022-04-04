@@ -38,7 +38,8 @@ os.chdir(output_directory)
 
 """
 TODO weird bug--the unicode encoding is correct at every step; if I do
-print(sentence) on line 61 it's fine; but in the csv I produce, unicode chars
+print(sentence) right before I use writer.writerow
+it's fine; but in the csv I produce, unicode chars
 like é come out looking weird.
 I don't think it affects the decision making in spacy; the problem only shows up
 at the very last moment. bizarre.
