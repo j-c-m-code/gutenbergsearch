@@ -1,5 +1,5 @@
 """
-Loads a folder of existing Spacy docs then uses the Matcher on them
+Loads an existing Spacy doc then uses the Matcher on it
 
 This works sentence by sentence, so it will never detect self-touch
 in this sentence from Custom of the Country:
