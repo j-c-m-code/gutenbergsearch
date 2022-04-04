@@ -7,6 +7,7 @@ in this sentence from Custom of the Country:
 and put the muzzle of his revolver against it.''
 We only know "it" means his head from the PREVIOUS sentence.
 """
+from datetime import datetime
 import glob
 import os
 from pathlib import Path
@@ -86,6 +87,7 @@ if __name__ == "__main__":
     source_directory = whichdir()
     os.chdir(source_directory)
     filelist = glob.glob("*")
+    print("Choose output directory")
     output_directory = whichdir()
 
     test_counter = 0
