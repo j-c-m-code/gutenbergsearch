@@ -50,7 +50,7 @@ with open("test_output.csv", "w", newline="", encoding="UTF-8") as file:
         doc = nlp(sentence)
         matches = matcher(doc)
         if len(matches) > 0:
-            print(sentence)
+            # print(sentence)
             writer.writerow([sentence, self_touch_actuals[count], "yes"])
         else:
             writer.writerow([sentence, self_touch_actuals[count], "no"])
