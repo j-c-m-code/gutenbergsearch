@@ -31,6 +31,7 @@ touch_list = [
     "scratch",
     "shave",
     "sit",
+    "sponge",
     "strike",
     "stroke",
     "suck",
@@ -38,6 +39,7 @@ touch_list = [
     "tear",
     "tongue",
     "touch",
+    "wash",
 ]
 
 bodypart_list = [
