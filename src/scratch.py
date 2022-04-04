@@ -35,13 +35,22 @@ output_directory = askdir.whichdir()
 
 os.chdir(output_directory)
 
+"""
+TODO weird bug--the unicode encoding is correct at every step; if I do
+print(sentence) on line 61 it's fine; but in the csv I produce, unicode chars
+like é come out looking weird.
+I don't think it affects the decision making in spacy; the problem only shows up
+at the very last moment. bizarre.
+"""
+
 with open("test_output.csv", "w", newline="", encoding="UTF-8") as file:
-    writer = csv.writer(file)
+    writer = csv.writer(file, dialect="excel")
     writer.writerow(["text", "self_touch_actual", "self_touch_predicted"])
     for count, sentence in enumerate(sentences):
         doc = nlp(sentence)
         matches = matcher(doc)
         if len(matches) > 0:
+            print(sentence)
             writer.writerow([sentence, self_touch_actuals[count], "yes"])
         else:
             writer.writerow([sentence, self_touch_actuals[count], "no"])
