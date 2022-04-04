@@ -105,8 +105,20 @@ if __name__ == "__main__":
                 # not the Spacy object
                 if is_match(sent.text):
                     matchlist.append(count)
-        print("We got " + str(test_counter) + " total matches")
-        print("There were " + str(len(matchlist)) + " true positives")
-        print("There were " + str(test_counter - len(matchlist)) + " false positives")
-        print((str(len(sentences) - test_counter)) + " were not matched")
+        with open(
+            rf"{output_directory}\use_matcher stats.txt",
+            "a",  # we want append mode, not write mode
+            encoding="utf-8",
+        ) as writer:
+            writer.write(
+                short_name + " produced " + str(test_counter) + " total matches"
+            )
+            writer.write(short_name + " had " + str(len(matchlist)) + " true positives")
+            writer.write(
+                short_name
+                + " had "
+                + str(test_counter - len(matchlist))
+                + " false positives"
+            )
+            writer.write((str(len(sentences) - test_counter)) + " were not matched")
         write_results(sentences, matchlist, short_name, output_directory)
