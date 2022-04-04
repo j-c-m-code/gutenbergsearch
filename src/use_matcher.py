@@ -1,5 +1,11 @@
 """
 Loads a folder of existing Spacy docs then uses the Matcher on them
+
+This works sentence by sentence, so it will never detect self-touch
+in this sentence from Custom of the Country:
+'Then he felt again, more deliberately, for the spot he wanted,
+and put the muzzle of his revolver against it.''
+We only know "it" means his head from the PREVIOUS sentence.
 """
 import glob
 import os
