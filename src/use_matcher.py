@@ -8,16 +8,15 @@ and put the muzzle of his revolver against it.''
 We only know "it" means his head from the PREVIOUS sentence.
 """
 from datetime import datetime
-import glob
-import os
 from pathlib import Path
 
 import spacy
 from spacy.matcher import Matcher
 from spacy.tokens import Doc
 
+import askdir
+import askfile
 import patterns
-from askdir import whichdir
 
 # not using named entity recognition, so disable it for speed
 nlp = spacy.load("en_core_web_lg", disable=["ner"])
@@ -50,20 +49,20 @@ def write_results(
         rf"{output_dir}\{short_nm} use_matcher output.txt",
         "a",  # we want append mode, not write mode
         encoding="utf-8",
-    ) as writer:
+    ) as wrtr:
         # match is a list of indices
         for match in match_list:
-            writer.write("Match in sentence " + str(match) + " from " + short_nm + "\n")
+            wrtr.write("Match in sentence " + str(match) + " from " + short_nm + "\n")
             # prints context around the match
             # remember, range stops BEFORE the stop argument
             for i in range(0, 2 * context_distance + 1):
                 index = match - context_distance + i
                 text_to_write = sentence_list[index].text
-                writer.write(text_to_write)
+                wrtr.write(text_to_write)
                 # puts a space after each sentence but the last
                 if i < 2 * context_distance:
-                    writer.write(" ")
-            writer.write("\n\n\n")
+                    wrtr.write(" ")
+            wrtr.write("\n\n\n")
 
 
 def yes_or_no() -> bool:
@@ -84,45 +83,43 @@ if __name__ == "__main__":
         "PATTERNS",
         [patterns.subject_pattern, patterns.object_pattern, patterns.body_pattern],
     )  # type: ignore
-    source_directory = whichdir()
-    os.chdir(source_directory)
-    filelist = glob.glob("*")
+    print("Choose file to work from")
+    spacy_source_doc = askfile.whichfile()
     print("Choose output directory")
-    output_directory = whichdir()
+    output_directory = askdir.whichdir()
+    time_of_run = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     test_counter = 0
 
-    for filename in filelist:
-        matchlist = []
-        doc = Doc(nlp.vocab).from_disk(filename)
-        # a sent is a kind of Span
-        sentences = list(doc.sents)
-        short_name = Path(filename).stem
-        for count, sent in enumerate(sentences):
-            # Spacy matcher works on a Doc or a Span (calling with a Span here)
-            matches = matcher(sent)
-            if len(matches) > 0:
-                test_counter += 1
-                # sent.text sends only the text of the sentence,
-                # not the Spacy object
-                if is_match(sent.text):
-                    matchlist.append(count)
-        with open(
-            rf"{output_directory}\use_matcher stats.txt",
-            "a",  # we want append mode, not write mode
-            encoding="utf-8",
-        ) as writer:
-            writer.write(
-                short_name + " produced " + str(test_counter) + " total matches\r\n"
-            )
-            writer.write(
-                short_name + " had " + str(len(matchlist)) + " true positives\r\n"
-            )
-            writer.write(
-                short_name
-                + " had "
-                + str(test_counter - len(matchlist))
-                + " false positives\r\n"
-            )
-            writer.write((str(len(sentences) - test_counter)) + " were not matched\r\n")
-        write_results(sentences, matchlist, short_name, output_directory)
+    matchlist = []
+    doc = Doc(nlp.vocab).from_disk(spacy_source_doc)
+    # a sent is a kind of Span
+    sentences = list(doc.sents)
+    short_name = Path(spacy_source_doc).stem
+    for count, sent in enumerate(sentences):
+        # Spacy matcher works on a Doc or a Span (calling with a Span here)
+        matches = matcher(sent)
+        if len(matches) > 0:
+            test_counter += 1
+            # sent.text sends only the text of the sentence,
+            # not the Spacy object
+            if is_match(sent.text):
+                matchlist.append(count)
+    with open(
+        rf"{output_directory}\use_matcher stats.txt",
+        "a",  # we want append mode, not write mode
+        encoding="utf-8",
+    ) as writer:
+        writer.write("When use_matcher was run on " + time_of_run + ",\r\n")
+        writer.write(
+            short_name + " produced " + str(test_counter) + " total matches\r\n"
+        )
+        writer.write(short_name + " had " + str(len(matchlist)) + " true positives\r\n")
+        writer.write(
+            short_name
+            + " had "
+            + str(test_counter - len(matchlist))
+            + " false positives\r\n"
+        )
+        writer.write((str(len(sentences) - test_counter)) + " were not matched\r\n")
+    write_results(sentences, matchlist, short_name, output_directory)
