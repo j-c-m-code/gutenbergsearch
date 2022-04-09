@@ -1,5 +1,5 @@
 """
-Loads a folder of existing Spacy docs then uses the Matcher on them
+Loads an existing Spacy doc then uses the Matcher on it
 
 This works sentence by sentence, so it will never detect self-touch
 in this sentence from Custom of the Country:
@@ -71,7 +71,7 @@ def yes_or_no() -> bool:
     """
     # this loop works because non-empty strings evaluate as truthy in Python
     while "the answer is invalid":
-        reply = str(input("Label as touch? (y/n) > ")).lower().strip()
+        reply = str(input("Label as self-touch? (y/n) > ")).lower().strip()
         if reply[:1] == "y":
             return True
         if reply[:1] == "n":
