@@ -16,6 +16,7 @@ nlp = spacy.load("en_core_web_lg")
 matcher = spacy.matcher.Matcher(nlp.vocab)
 
 # <codecell>
+print("Which CSV file for input?")
 input_file = askfile.whichfile()
 
 # <codecell>
@@ -32,20 +33,17 @@ matcher.add(
     # [patterns.body_pattern],
 )  # type: ignore
 
+print("Which dirctory for output?")
 output_directory = askdir.whichdir()
 
 os.chdir(output_directory)
 
 """
-TODO weird bug--the unicode encoding is correct at every step; if I do
-print(sentence) right before I use writer.writerow
-it's fine; but in the csv I produce, unicode chars
-like é come out looking weird.
-I don't think it affects the decision making in spacy; the problem only shows up
-at the very last moment. bizarre.
+Unless I use Windows-1252 encoding instead of UTF-8, some characters like
+LATIN SMALL LETTER E WITH ACUTE come out garbled
 """
 
-with open("test_output.csv", "w", newline="", encoding="UTF-8") as file:
+with open("test_output.csv", "w", newline="", encoding="Windows-1252") as file:
     writer = csv.writer(file, dialect="excel")
     writer.writerow(["text", "self_touch_actual", "self_touch_predicted"])
     for count, sentence in enumerate(sentences):
@@ -58,8 +56,10 @@ with open("test_output.csv", "w", newline="", encoding="UTF-8") as file:
             writer.writerow([sentence, self_touch_actuals[count], "no"])
 
 # <codecell>
-output_file = askfile.whichfile()
-output_frame = pandas.read_csv(output_file, encoding="UTF-8")
+print("Which CSV file to create confusion matrix?")
+matrix_input_file = askfile.whichfile()
+# have to use Windows-1252 because it's what I used above
+output_frame = pandas.read_csv(matrix_input_file, encoding="Windows-1252")
 
 confusion_matrix = pandas.crosstab(
     output_frame["self_touch_actual"],
