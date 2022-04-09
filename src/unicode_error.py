@@ -4,7 +4,7 @@ import unicodedata
 
 test_char = "\u00e9"  # LATIN SMALL LETTER E WITH ACUTE
 
-print(test_char)
+print(test_char)  # prints correctly
 
 with open("test.csv", "w", newline="", encoding="UTF-8") as file:
     writer = csv.writer(file)
