@@ -8,8 +8,6 @@ input_file = askfile.whichfile()
 
 input_frame = pandas.read_csv(input_file, encoding="UTF-8")
 
-print(input_frame)
-
 # multiplying numerator by 1000 for easier reading
 
 input_frame["self_touch"] = (
