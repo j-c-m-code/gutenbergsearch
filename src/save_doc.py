@@ -13,8 +13,10 @@ from askfile import whichfile
 
 nlp = spacy.load("en_core_web_lg")
 
+print("Choose a txt file to convert to Spacy doc")
 source_file = whichfile()
 short_name = Path(source_file).stem
+print("Choose a directory to save the Spacy doc in")
 output_directory = whichdir()
 
 with open(source_file, "r", encoding="utf-8") as f:
