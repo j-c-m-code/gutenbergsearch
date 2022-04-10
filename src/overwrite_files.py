@@ -15,6 +15,7 @@ from fs.osfs import OSFS
 import askdir as ad
 import clean_gutenberg_headers as cgh
 
+print("Choose a directory to process - will recurse to the bottom of the tree")
 DIRECTORY = ad.whichdir()
 
 
