@@ -114,7 +114,9 @@ if __name__ == "__main__":
         # \n as carriage return + line feed (the Windows line ending)
         # so I am ending lines here with \n only
         writer.write("When use_matcher was run on " + time_of_run + ",\n")
-        writer.write(short_name + " produced " + str(test_counter) + " total matches\n")
+        writer.write(
+            short_name + " produced " + str(test_counter) + " total sentence matches\n"
+        )
         writer.write(short_name + " had " + str(len(matchlist)) + " true positives\n")
         writer.write(
             short_name
@@ -122,6 +124,8 @@ if __name__ == "__main__":
             + str(test_counter - len(matchlist))
             + " false positives\n"
         )
-        writer.write((str(len(sentences) - test_counter)) + " were not matched\n")
+        writer.write(
+            (str(len(sentences) - test_counter)) + " sentences were not matched\n"
+        )
         writer.write("\n")
     write_results(sentences, matchlist, short_name, output_directory)
