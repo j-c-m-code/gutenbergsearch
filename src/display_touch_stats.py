@@ -1,3 +1,6 @@
+"""
+Displays statistics for self-touch in selected novels
+"""
 import pandas
 
 
