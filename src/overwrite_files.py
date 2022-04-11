@@ -33,7 +33,7 @@ def _main():
                 contents = cgh.strip_headers(contents)
 
                 """
-                removes chapter numbers;
+                removes chapter/book/part numbers;
                 finds lines with only "Chapter III" or "III" on them
                 Python expects \n, not \r\n, so I can't use start/end anchors
                 and the Multiline flag doesn't help me
