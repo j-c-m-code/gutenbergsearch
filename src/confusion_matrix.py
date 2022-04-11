@@ -12,7 +12,7 @@ import askfile
 import patterns
 
 # <codecell>
-nlp = spacy.load("en_core_web_lg")
+nlp = spacy.load("en_core_web_lg", disable=["ner"])
 matcher = spacy.matcher.Matcher(nlp.vocab)
 
 # <codecell>
