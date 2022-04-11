@@ -2,7 +2,9 @@
 # <codecell>
 import csv
 import os
+import matplotlib.pyplot
 import pandas
+
 
 import seaborn
 import spacy
@@ -30,7 +32,6 @@ self_touch_actuals = list(input_frame["self_touch_actual"])
 matcher.add(
     "PATTERNS",
     [patterns.subject_pattern, patterns.object_pattern, patterns.body_pattern],
-    # [patterns.body_pattern],
 )  # type: ignore
 
 print("Which dirctory for output?")
@@ -68,4 +69,7 @@ confusion_matrix = pandas.crosstab(
     colnames=["Predicted"],
 )
 
-seaborn.heatmap(confusion_matrix, annot=True, cmap="Blues")
+heat_map = seaborn.heatmap(confusion_matrix, annot=True, cmap="Blues")
+
+# saves a png of the heatmap we just created
+matplotlib.pyplot.savefig("test on labeled sentences.png")
