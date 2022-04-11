@@ -4,10 +4,9 @@ Loads an existing Spacy doc then uses the Matcher on it
 This works sentence by sentence, so it will never detect self-touch
 in this sentence from Custom of the Country:
 'Then he felt again, more deliberately, for the spot he wanted,
-and put the muzzle of his revolver against it.''
+and put the muzzle of his revolver against it.'
 We only know "it" means his head from the PREVIOUS sentence.
 """
-import pandas
 from datetime import datetime
 from pathlib import Path
 
@@ -94,6 +93,11 @@ if __name__ == "__main__":
 
     matchlist = []
     doc = Doc(nlp.vocab).from_disk(spacy_source_doc)
+    word_count = []
+    for token in doc:
+        if not (token.is_punct | token.is_space):
+            word_count.append(token)
+
     # a sent is a kind of Span
     sentences = list(doc.sents)
     short_name = Path(spacy_source_doc).stem
@@ -129,5 +133,6 @@ if __name__ == "__main__":
         writer.write(
             (str(len(sentences) - test_counter)) + " sentences were not matched\n"
         )
+        writer.write("Word count of " + short_name + " was " + len(word_count))
         writer.write("\n")
     write_results(sentences, matchlist, short_name, output_directory)
