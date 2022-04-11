@@ -7,6 +7,7 @@ in this sentence from Custom of the Country:
 and put the muzzle of his revolver against it.''
 We only know "it" means his head from the PREVIOUS sentence.
 """
+import pandas
 from datetime import datetime
 from pathlib import Path
 
@@ -105,6 +106,7 @@ if __name__ == "__main__":
             # not the Spacy object
             if is_match(sent.text):
                 matchlist.append(count)
+
     with open(
         rf"{output_directory}\use_matcher stats.txt",
         "a",  # we want append mode, not write mode
