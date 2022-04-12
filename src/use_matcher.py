@@ -95,9 +95,8 @@ if __name__ == "__main__":
     doc = Doc(nlp.vocab).from_disk(spacy_source_doc)
     word_count = []
     for token in doc:
-        if not (token.is_punct | token.is_space):
+        if not token.is_punct | token.is_space:
             word_count.append(token)
-
     # a sent is a kind of Span
     sentences = list(doc.sents)
     short_name = Path(spacy_source_doc).stem
