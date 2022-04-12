@@ -19,6 +19,6 @@ input_frame["self_touch"] = (
 input_frame.sort_values(by="self_touch", ascending=False)
 
 output_directory = askdir.whichdir()
-input_frame.to_csv(
-    rf"{output_directory}\out.csv", encoding="UTF-8"
-)  # pylint: disable=E1101
+# pylint: disable=no-member
+input_frame.to_csv(rf"{output_directory}\out.csv", encoding="UTF-8")
+# pylint: enable=no-member
