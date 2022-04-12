@@ -4,6 +4,7 @@ Displays statistics for self-touch in selected novels
 import pandas
 
 import askfile
+import askdir
 
 print("Which CSV file for input?")
 input_file = askfile.whichfile()
@@ -17,4 +18,7 @@ input_frame["self_touch"] = (
 
 input_frame.sort_values(by="self_touch", ascending=False)
 
-input_frame.to_csv("out.csv", encoding="UTF-8")
+output_directory = askdir.whichdir()
+input_frame.to_csv(
+    rf"{output_directory}\out.csv", encoding="UTF-8"
+)  # pylint: disable=E1101
