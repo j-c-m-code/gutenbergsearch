@@ -89,7 +89,7 @@ if __name__ == "__main__":
     output_directory = askdir.whichdir()
     time_of_run = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    test_counter = 0
+    test_counter = 0  # pylint: disable=invalid-name
 
     matchlist = []
     doc = Doc(nlp.vocab).from_disk(spacy_source_doc)
