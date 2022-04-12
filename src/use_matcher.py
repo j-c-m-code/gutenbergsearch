@@ -132,6 +132,6 @@ if __name__ == "__main__":
         writer.write(
             (str(len(sentences) - test_counter)) + " sentences were not matched\n"
         )
-        writer.write("Word count of " + short_name + " was " + len(word_count))
+        writer.write("Word count of " + short_name + " was " + str(len(word_count)))
         writer.write("\n")
     write_results(sentences, matchlist, short_name, output_directory)
