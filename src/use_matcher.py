@@ -24,12 +24,12 @@ matcher = Matcher(nlp.vocab)
 
 
 # using type hints
-def is_match(count: int, sentence: str) -> bool:
+def is_match(sentence_count: int, sentence: str) -> bool:
     """
     Is this a real match?
     Return True or False
     """
-    print("Sentence " + str(count) + ":")
+    print("Sentence " + str(sentence_count) + ":")
     print(sentence)
     to_label = yes_or_no()
     # below line returns either True or False
