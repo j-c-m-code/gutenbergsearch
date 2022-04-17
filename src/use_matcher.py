@@ -24,11 +24,12 @@ matcher = Matcher(nlp.vocab)
 
 
 # using type hints
-def is_match(sentence: str) -> bool:
+def is_match(count: int, sentence: str) -> bool:
     """
     Is this a real match?
     Return True or False
     """
+    print("Sentence " + str(count) + ":")
     print(sentence)
     to_label = yes_or_no()
     # below line returns either True or False
@@ -69,7 +70,7 @@ def write_results(
                 # puts a space after each sentence but the last
                 if i < 2 * context_distance:
                     wrtr.write(" ")
-            wrtr.write("\n\n\n")
+            wrtr.write("\n\n")
 
 
 def yes_or_no() -> bool:
@@ -114,7 +115,7 @@ if __name__ == "__main__":
             test_counter += 1
             # sent.text sends only the text of the sentence,
             # not the Spacy object
-            if is_match(sent.text):
+            if is_match(count, sent.text):
                 matchlist.append(count)
 
     with open(
@@ -125,7 +126,7 @@ if __name__ == "__main__":
         # writer.write seems to treat \r as carriage return and
         # \n as carriage return + line feed (the Windows line ending)
         # so I am ending lines here with \n only
-        writer.write("When use_matcher was run on " + time_of_run + ",\n")
+        writer.write("\nWhen use_matcher was run on " + time_of_run + ",\n")
         writer.write(
             short_name + " produced " + str(test_counter) + " total sentence matches\n"
         )
