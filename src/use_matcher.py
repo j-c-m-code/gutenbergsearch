@@ -7,6 +7,7 @@ in this sentence from Custom of the Country:
 and put the muzzle of his revolver against it.'
 We only know "it" means his head from the PREVIOUS sentence.
 """
+import csv
 from datetime import datetime
 from pathlib import Path
 
@@ -65,7 +66,10 @@ def write_results(
             # remember, range stops BEFORE the stop argument
             for i in range(0, 2 * context_distance + 1):
                 index = match - context_distance + i
-                text_to_write = sentence_list[index].text
+                if index == match:
+                    text_to_write = str.upper(sentence_list[index].text)
+                else:
+                    text_to_write = sentence_list[index].text
                 wrtr.write(text_to_write)
                 # puts a space after each sentence but the last
                 if i < 2 * context_distance:
@@ -91,7 +95,7 @@ if __name__ == "__main__":
         "PATTERNS",
         [patterns.subject_pattern, patterns.object_pattern, patterns.body_pattern],
     )  # type: ignore
-    print("Choose file to work from")
+    print("Choose spaCy doc to work from")
     spacy_source_doc = askfile.whichfile()
     print("Choose output directory")
     output_directory = askdir.whichdir()
@@ -119,27 +123,39 @@ if __name__ == "__main__":
                 matchlist.append(count)
 
     with open(
-        rf"{output_directory}\use_matcher stats.txt",
+        rf"{output_directory}\use_matcher stats.csv",
         "a",  # we want append mode, not write mode
         encoding="utf-8",
-    ) as writer:
+        newline="",
+    ) as csvfile:
+        results_file = csv.writer(csvfile, dialect="excel")
+        results_file.writerow(
+            short_name,
+            time_of_run,
+            test_counter,
+            str(len(matchlist)),
+            str(test_counter - len(matchlist)),
+            str(len(sentences) - test_counter),
+            str(len(word_count)),
+        )
+
         # writer.write seems to treat \r as carriage return and
         # \n as carriage return + line feed (the Windows line ending)
         # so I am ending lines here with \n only
-        writer.write("\nWhen use_matcher was run on " + time_of_run + ",\n")
-        writer.write(
-            short_name + " produced " + str(test_counter) + " total sentence matches\n"
-        )
-        writer.write(short_name + " had " + str(len(matchlist)) + " true positives\n")
-        writer.write(
-            short_name
-            + " had "
-            + str(test_counter - len(matchlist))
-            + " false positives\n"
-        )
-        writer.write(
-            (str(len(sentences) - test_counter)) + " sentences were not matched\n"
-        )
-        writer.write("Word count of " + short_name + " was " + str(len(word_count)))
-        writer.write("\n")
+        # writer.write("\nWhen use_matcher was run on " + time_of_run + ",\n")
+        # writer.write(
+        #     short_name + " produced " + str(test_counter) + " total sentence matches\n"
+        # )
+        # writer.write(short_name + " had " + str(len(matchlist)) + " true positives\n")
+        # writer.write(
+        #     short_name
+        #     + " had "
+        #     + str(test_counter - len(matchlist))
+        #     + " false positives\n"
+        # )
+        # writer.write(
+        #     (str(len(sentences) - test_counter)) + " sentences were not matched\n"
+        # )
+        # writer.write("Word count of " + short_name + " was " + str(len(word_count)))
+        # writer.write("\n")
     write_results(sentences, matchlist, short_name, output_directory)
