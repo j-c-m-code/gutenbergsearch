@@ -18,8 +18,10 @@ input_frame["self_touch"] = (
 
 input_frame.sort_values(by="self_touch", ascending=False)
 
-print("Which directory for output csv file?")
+print("Which directory for output Excel file?")
 output_directory = askdir.whichdir()
 # pylint: disable=no-member
-input_frame.to_csv(rf"{output_directory}\out.csv", encoding="UTF-8")
+input_frame.to_excel(
+    rf"{output_directory}\display_touch_stats.xlsx", index=False, encoding="UTF-8"
+)
 # pylint: enable=no-member
