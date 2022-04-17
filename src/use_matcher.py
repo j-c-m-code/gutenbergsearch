@@ -45,8 +45,15 @@ def write_results(
     """
     context_distance = 2
 
+    output_path = Path(rf"{output_dir}\{short_nm} use_matcher output.txt")
+
+    # check if an output document already exists
+    # if so, delete it
+    if output_path.is_file():
+        output_path.unlink()
+
     with open(
-        rf"{output_dir}\{short_nm} use_matcher output.txt",
+        output_path,
         "a",  # we want append mode, not write mode
         encoding="utf-8",
     ) as wrtr:
