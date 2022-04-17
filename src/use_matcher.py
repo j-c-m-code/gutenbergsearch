@@ -122,40 +122,57 @@ if __name__ == "__main__":
             if is_match(count, sent.text):
                 matchlist.append(count)
 
-    with open(
-        rf"{output_directory}\use_matcher stats.csv",
-        "a",  # we want append mode, not write mode
-        encoding="utf-8",
-        newline="",
-    ) as csvfile:
-        results_file = csv.writer(csvfile, dialect="excel")
-        results_file.writerow(
-            short_name,
-            time_of_run,
-            test_counter,
-            str(len(matchlist)),
-            str(test_counter - len(matchlist)),
-            str(len(sentences) - test_counter),
-            str(len(word_count)),
-        )
+    use_matcher_stats_path = Path(rf"{output_directory}\use_matcher stats.csv")
+    # if file doesn't exist yet
+    if not use_matcher_stats_path.is_file():
+        with open(
+            use_matcher_stats_path,
+            "w",  # we want write mode here
+            encoding="utf-8",
+            newline="",
+        ) as csvfile:
+            results_file = csv.writer(csvfile, dialect="excel")
+            results_file.writerow(
+                [
+                    "Book",
+                    "Time use_matcher was run",
+                    "Total sentence matches",
+                    "True positives",
+                    "False positives",
+                    "Sentences not matched",
+                    "Word count",
+                ]
+            )
+            results_file.writerow(
+                [
+                    short_name,
+                    time_of_run,
+                    test_counter,
+                    str(len(matchlist)),
+                    str(test_counter - len(matchlist)),
+                    str(len(sentences) - test_counter),
+                    str(len(word_count)),
+                ]
+            )
+    # if file does already exist, just append to it
+    else:
+        with open(
+            use_matcher_stats_path,
+            "a",  # we want append mode, not write mode
+            encoding="utf-8",
+            newline="",
+        ) as csvfile:
+            results_file = csv.writer(csvfile, dialect="excel")
+            results_file.writerow(
+                [
+                    short_name,
+                    time_of_run,
+                    test_counter,
+                    str(len(matchlist)),
+                    str(test_counter - len(matchlist)),
+                    str(len(sentences) - test_counter),
+                    str(len(word_count)),
+                ]
+            )
 
-        # writer.write seems to treat \r as carriage return and
-        # \n as carriage return + line feed (the Windows line ending)
-        # so I am ending lines here with \n only
-        # writer.write("\nWhen use_matcher was run on " + time_of_run + ",\n")
-        # writer.write(
-        #     short_name + " produced " + str(test_counter) + " total sentence matches\n"
-        # )
-        # writer.write(short_name + " had " + str(len(matchlist)) + " true positives\n")
-        # writer.write(
-        #     short_name
-        #     + " had "
-        #     + str(test_counter - len(matchlist))
-        #     + " false positives\n"
-        # )
-        # writer.write(
-        #     (str(len(sentences) - test_counter)) + " sentences were not matched\n"
-        # )
-        # writer.write("Word count of " + short_name + " was " + str(len(word_count)))
-        # writer.write("\n")
     write_results(sentences, matchlist, short_name, output_directory)
