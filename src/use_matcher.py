@@ -61,7 +61,9 @@ def write_results(
     ) as wrtr:
         # match is a list of indices
         for match in match_list:
-            wrtr.write("Match in sentence " + str(match) + " from " + short_nm + "\n")
+            wrtr.write(
+                "\nMatch in sentence " + str(match) + " from " + short_nm + "\n\n"
+            )
             # prints context around the match
             # remember, range stops BEFORE the stop argument
             for i in range(0, 2 * context_distance + 1):
