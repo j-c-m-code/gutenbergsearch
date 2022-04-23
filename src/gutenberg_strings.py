@@ -56,6 +56,7 @@ TEXT_START_MARKERS = frozenset(
         "and the Project Gutenberg Online Distributed Proofreading Team",
         "Mary Meehan, and the Project Gutenberg Online Distributed Proofreading",
         "                this Project Gutenberg edition.",
+        "Archive: American Libraries, and Project Gutenberg Australia",
     )
 )
 
